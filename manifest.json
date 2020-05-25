@@ -1,15 +1,14 @@
 {
   "name": "ポモドーロイット",
-  "version": "1.0",
+  "version": "1.01",
   "description": "ポモドーロテクニックで時間管理",
-  "permissions": ["notifications"],
+  "permissions": ["notifications", "tabs"],
   "options_page": "options.html",
   "background": {
     "scripts": ["background.js"],
     "persistent": false
   },
   "browser_action": {
-      "name": "タイマー開始"
   },
   "icons": {
     "16": "images/get_started16.png",

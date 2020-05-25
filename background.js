@@ -21,6 +21,7 @@ function tick(timeout){
  * タイマーの処理
  */
 var timer = new function Timer(){
+  let working = 0;
   this.working = true; // work中か、否か
   this.running = false; // timerは動いているか、否か
 
