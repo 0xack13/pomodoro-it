@@ -1,12 +1,13 @@
 let counter = 0;
 
 /*
- * ブロック対象
+ * ブロックの処理
  */
 let block = new function Block(){
   this.list = [
-    'twitter.com',
-    'https://www.youtube.com/',
+    'https://twitter.com/home',
+    'www.youtube.com/',
+    'yahoo.co.jp/'
   ];
   this.url = [];
 
@@ -25,8 +26,8 @@ let block = new function Block(){
 }
 
 /*
- * URLをドメイン / パスに分割
- * 引数１：分割するURL
+ * URLをドメインとパスに分割
+ * 第１引数：分割するURL
  */
 function Split(url){
   if(url.match('://')){
@@ -41,12 +42,55 @@ function Split(url){
 
 /*
  * プロックチェック
- * 引数１：チェックするタブ
+ * 第１引数：チェックするタブ
  */
 function Check(tab){
-  let url = Split(tab.url);
+  let target = Split(tab.url);
+  let domainCheck = false, pathCheck = false;
+
   for(let k in block.url){
-    if(url.domain == block.url[k].domain) console.log(url);
+    /*
+     * 【１】ドメインが完全に一致したときブロック
+     * 例 google.com v.s. google.com -> ブロック
+     */
+    if(target.domain == block.url[k].domain){
+      domainCheck = true;
+    }
+    /*
+     * 【２】ドメインが対象の方が長く
+     * 　　　かつ「.」でホスト名などが頭に付いているときブロック
+     * 例 www.google.com v.s. google.com -> ブロック
+     */
+    else{
+      let lengthGap = target.domain.length - block.url[k].domain.length - 1;
+      if(lengthGap >= 0 && target.domain.substr(lengthGap) === '.' + block.url[k].domain){
+        domainCheck = true;
+      }
+    }
+    /*
+     * 【３】パスが空白のときブロック
+     * 例 /path/index.html v.s null -> ブロック
+     */
+    if(!block.url[k].path){
+      pathCheck = true;
+    }
+    /*
+     * 【４】パスの先頭から対象が一致するとき
+     * 例 /path/index.html v.s /path/index / /path/index.html -> ブロック
+     */
+    else {
+       if(target.path.substr(0, block.url[k].path.length) == block.url[k].path){
+         pathCheck = true;
+       }
+    }
+
+    /*
+     * 対象のタブがブロックリストに該当するとき処理
+     */
+    if(domainCheck && pathCheck){
+      // console.log("ブロック：" + target.domain + " / " + target.path);
+      chrome.tabs.remove(tab.id); // 対象のタブを閉じる
+    }
   }
 }
 
@@ -71,7 +115,7 @@ function initCheck(){
 
 /*
  * タイマー起動時の毎分の処理
- * 引数１：タイマーの制限時間
+ * 第１引数：タイマーの制限時間
  */
 function Tick(timeout){
   console.log("COUNT:" + ++counter);
