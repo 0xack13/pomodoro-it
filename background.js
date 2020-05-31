@@ -24,6 +24,16 @@ let block = new function Block(){
     }
   }
 }
+/*
+ * ブラウザーアクションアイコンのセット処理
+ * 第１引数：アイコンインデックス
+ */
+function setIcon(index){
+  let mode = timer.worktime ? "work" : "break";
+  chrome.browserAction.setIcon({
+    path: "images/"+ mode + index + ".png"
+  });
+}
 
 /*
  * URLをドメインとパスに分割
@@ -88,7 +98,6 @@ function Check(tab){
      * 対象のタブがブロックリストに該当するとき処理
      */
     if(domainCheck && pathCheck){
-      // console.log("ブロック：" + target.domain + " / " + target.path);
       chrome.tabs.remove(tab.id); // 対象のタブを閉じる
     }
   }
@@ -119,18 +128,23 @@ function initCheck(){
  */
 function Tick(timeout){
   console.log("COUNT:" + ++counter);
+
   /*
    * タイマー終了時の処理
    */
   if(counter >= timeout){
+    setIcon(0); // ブラウザーアクションアイコンの設定
     let msg = timer.worktime ? "仕事終わり！" : "休憩終わり！";
     chrome.notifications.create({
       title: "タイマー終了",
       message: msg,
       type: "basic",
-      iconUrl: "images/get_started48.png"
+      iconUrl: "images/work0.png"
     });
     timer.stop();
+  }
+  else{
+    setIcon(counter); // ブラウザーアクションアイコンの更新
   }
 }
 
@@ -146,7 +160,8 @@ let timer = new function Timer(){
    */
   this.start = function(){
     this.running = true;
-    let timeout = this.worktime ? 5 : 3; // work中なら前者[分]、でなければ後者[分]
+    setIcon(0); // ブラウザアクションアイコンのセット
+    let timeout = this.worktime ? 25 : 5; // タイムアウトの時間
     interval = setInterval(Tick, 1000, timeout);
     if(this.worktime){
       initCheck();
