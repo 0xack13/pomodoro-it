@@ -1,8 +1,8 @@
 {
-  "name": "ポモドーロイット",
+  "name": "Pomodoro it",
   "version": "1.1",
-  "description": "ポモドーロテクニックで時間管理",
-  "permissions": ["notifications", "tabs"],
+  "description": "ポモドーロテクニックで時間管理 / Task management with Pomodoro Technique",
+  "permissions": ["notifications", "tabs", "storage"],
   "options_page": "options.html",
   "background": {
     "scripts": ["background.js"],

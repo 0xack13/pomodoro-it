@@ -1,21 +1,18 @@
-let counter = 0;
-
 /*
  * ブロックの処理
  */
 let block = new function Block(){
-  this.list = [
-    'https://twitter.com/home',
-    'www.youtube.com/',
-    'yahoo.co.jp/'
-  ];
+  this.list = [];
   this.url = [];
 
   /*
    * ブロックリストとURLの更新
    */
   this.update = function(){
-    // ブロックリスト取得
+    chrome.storage.local.get("blacklist", function(result) {
+      block.list = result.blacklist;
+      console.log(result.blacklist);
+    });
     /*
      * ブロックリストをURLに返還
      */
@@ -29,7 +26,7 @@ let block = new function Block(){
  * 第１引数：アイコンインデックス
  */
 function setIcon(index){
-  let mode = timer.worktime ? "work" : "break";
+  let mode = timer.isWorkTime ? "work" : "break";
   chrome.browserAction.setIcon({
     path: "images/"+ mode + index + ".png"
   });
@@ -127,16 +124,15 @@ function initCheck(){
  * 第１引数：タイマーの制限時間
  */
 function Tick(timeout){
-  console.log("COUNT:" + ++counter);
-
+  timer.counter++;
   /*
    * タイマー終了時の処理
    */
-  if(counter >= timeout){
+  if(timer.counter >= timeout){
     setIcon(0); // ブラウザーアクションアイコンの設定
-    let msg = timer.worktime ? "仕事終わり！" : "休憩終わり！";
+    let msg = timer.isWorkTime ? "Let's have a break!" : "Let'start working!";
     chrome.notifications.create({
-      title: "タイマー終了",
+      title: "Time is up",
       message: msg,
       type: "basic",
       iconUrl: "images/work0.png"
@@ -144,7 +140,7 @@ function Tick(timeout){
     timer.stop();
   }
   else{
-    setIcon(counter); // ブラウザーアクションアイコンの更新
+    setIcon(timer.counter); // ブラウザーアクションアイコンの更新
   }
 }
 
@@ -152,18 +148,25 @@ function Tick(timeout){
  * タイマーの処理
  */
 let timer = new function Timer(){
-  this.running = false; // timerは動いているか、否か
-  this.worktime = true; // work中か、否か
+  this.counter = 0; // タイマー時間[分]カウンター
+  this.phase = 0; // タイマーの起動回数
+  this.isRunning = false; // タイマーが動いているか、否か
+  this.isWorkTime = true; // work中か、否か
 
   /*
    * タイマーの開始処理
    */
   this.start = function(){
-    this.running = true;
+    this.isRunning = true;
+    chrome.storage.local.get("PHASE", function(result) {
+        this.phase = result.PHASE;
+    });
+    console.log(this.phase);
     setIcon(0); // ブラウザアクションアイコンのセット
-    let timeout = this.worktime ? 25 : 5; // タイムアウトの時間
-    interval = setInterval(Tick, 1000, timeout);
-    if(this.worktime){
+    let timeout = this.isWorkTime ? 25 : 5; // タイムアウトの時間[分]
+    interval = setInterval(Tick, 100, timeout);
+    setIcon(0); // ブラウザアクションアイコンのセット
+    if(this.isWorkTime){
       initCheck();
     }
   }
@@ -171,9 +174,10 @@ let timer = new function Timer(){
    * タイマーの停止処理
    */
   this.stop = function(){
-    this.running = false;
-    counter = 0; // カウンターリセット
-    this.worktime = !this.worktime; // work中か、否かの反転
+    this.isRunning = false;
+    this.counter = 0; // カウンターリセット
+    this.isWorkTime = !this.isWorkTime; // work中か、否かの反転
+    chrome.storage.local.set({"PHASE": this.phase++}, function(){});
     clearInterval(interval);
   }
 };
@@ -182,6 +186,7 @@ let timer = new function Timer(){
  * 通知がクリックされたときの処理
  */
 chrome.notifications.onClicked.addListener(function (id) {
+  timer.start();
   chrome.windows.getLastFocused(function (window) {
     chrome.windows.update(window.id, {focused: true});
   });
@@ -191,7 +196,7 @@ chrome.notifications.onClicked.addListener(function (id) {
  * タブがアップデートされたときの処理
  */
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  if(timer.running && timer.worktime) {
+  if(timer.isRunning && timer.isWorkTime) {
     Check(tab);
   }
 });
@@ -200,7 +205,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
  * ブラウザアクションボタンクリック時の処理
  */
 chrome.browserAction.onClicked.addListener(function() {
-  if(!timer.running){
+  if(!timer.isRunning){
     timer.start();
   }
 });

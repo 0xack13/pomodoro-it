@@ -1,0 +1,38 @@
+.box{
+  margin: 3em 45em 3em;
+  padding: 0em 0em 5em;
+  background: #FFF4E1;
+  border: solid 3px #FFF;
+  border-radius: 10px;
+  text-align: center;
+}
+.title{
+  margin: 1em 0em 0em;
+  font-size: 40px;
+  font-weight: bold;
+  text-decoration: underline;
+  font-family: 游ゴシック体, 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro';
+}
+.description{
+  font-size: 15px;
+  font-family: メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+}
+input, textarea {
+  border: none;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
+  border: solid 3px #FFF4E1;
+  border-radius: 0.3rem;
+  background: darken(#f9f9f9, 10%);
+  color: darken(#f9f9f9, 50%);
+}
+.button {
+  margin: 0em 3em;
+  display      : inline-block;
+  opacity      : 1;
+  cursor       : pointer;
+  transition   : .3s;
+}
+.button:hover {
+  opacity      : 0.5;
+}

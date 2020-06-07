@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      button {
-        height: 30px;
-        width: 30px;
-        outline: none;
-        margin: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="buttonDiv">
+<head>
+  <title>Pomodoro it</title>
+  <meta http-equiv="content-type" charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="options.css">
+</head>
+<body>
+  <div class="box">
+    <div class="title">BLACK LIST</div>
+    <div class="description">ブロックしたいサイトURLを入力してください / Fill in the URLs you'd like to block</div><br>
+    <textarea id="blacklist" cols="70" rows="10" placeholder="URLs here"></textarea>
+
+    <div class="title">TIMER</div>
+    <div class="description">タイマーを設定してください(Pro版のみ) / Set the timer configurations(for only Pro)<br><br>
+      Work: <input type="text" name="work" value="25" size="1" readonly="readonly">min., Break: <input type="text" name="break" value="5" size="1" readonly="readonly">min. / Cycle<br>
+      Long break: <input type="text" name="longbreak" value="15" size="1" readonly="readonly">min. every <input type="text" name="cycle" value="4" size="1" readonly="readonly">Cycles
     </div>
-    <div>
-      <p>Choose a different background color!</p>
-    </div>
-  </body>
-  <script src="options.js"></script>
+  </div>
+  <div style="text-align: center;">
+    <img src="images/save.png" class="button" id="save"><img src="images/default.png" class="button" id="default"><br><br>
+    <div class="description" id="result"></div>
+  </div>
+</body>
+<script src="options.js"></script>
 </html>
