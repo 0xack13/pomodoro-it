@@ -4,14 +4,12 @@
 let block = new function Block(){
   this.list = [];
   this.url = [];
-
   /*
    * ブロックリストとURLの更新
    */
   this.update = function(){
-    chrome.storage.local.get("blacklist", function(result) {
-      block.list = result.blacklist;
-      console.log(result.blacklist);
+    chrome.storage.local.get("BLACKLIST", function(result) {
+      block.list = result.BLACKLIST;
     });
     /*
      * ブロックリストをURLに返還
@@ -27,6 +25,7 @@ let block = new function Block(){
  */
 function setIcon(index){
   let mode = timer.isWorkTime ? "work" : "break";
+  if(timer.getTimeout() == 5) index *= 3; // 通常休憩時のindex調整
   chrome.browserAction.setIcon({
     path: "images/"+ mode + index + ".png"
   });
@@ -105,7 +104,6 @@ function Check(tab){
  */
 function initCheck(){
    block.update();
-
   /*
    * タブごとにCheckを実行
    */
@@ -147,28 +145,29 @@ function Tick(timeout){
 /*
  * タイマーの処理
  */
-let timer = new function Timer(){
+var timer = new function Timer(){
   this.counter = 0; // タイマー時間[分]カウンター
-  this.phase = 0; // タイマーの起動回数
+  this.phase = 1; // タイマーの起動回数
   this.isRunning = false; // タイマーが動いているか、否か
-  this.isWorkTime = true; // work中か、否か
+  this.isWorkTime = true; // work中か否か
 
   /*
    * タイマーの開始処理
    */
   this.start = function(){
     this.isRunning = true;
-    chrome.storage.local.get("PHASE", function(result) {
-        this.phase = result.PHASE;
-    });
-    console.log(this.phase);
     setIcon(0); // ブラウザアクションアイコンのセット
-    let timeout = this.isWorkTime ? 25 : 5; // タイムアウトの時間[分]
-    interval = setInterval(Tick, 100, timeout);
-    setIcon(0); // ブラウザアクションアイコンのセット
-    if(this.isWorkTime){
-      initCheck();
-    }
+    interval = setInterval(Tick, 100, this.getTimeout());
+    if(this.isWorkTime) initCheck();
+  }
+  /*
+   * タイムアウト時間[分]を返す処理
+   */
+  this.getTimeout = function(){
+    // work
+    if(this.phase % 2 != 0) return 25;
+    // break
+    else return (this.phase % 8 != 0) ? 5 : 15;
   }
   /*
    * タイマーの停止処理
@@ -176,8 +175,8 @@ let timer = new function Timer(){
   this.stop = function(){
     this.isRunning = false;
     this.counter = 0; // カウンターリセット
-    this.isWorkTime = !this.isWorkTime; // work中か、否かの反転
-    chrome.storage.local.set({"PHASE": this.phase++}, function(){});
+    ++this.phase; // タイマーの起動回数のカウントアップ
+    this.isWorkTime = !this.isWorkTime; // work <> break反転
     clearInterval(interval);
   }
 };

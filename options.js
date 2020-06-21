@@ -11,10 +11,11 @@ let defaultBlacklist = [
 /*
  * Chrome Storageから情報を取得
  */
-chrome.storage.local.get("blacklist", function(result) {
-    document.getElementById("blacklist").value = (typeof result.blacklist === "undefined") ? defaultBlacklist : result.blacklist;
+chrome.storage.local.get("BLACKLIST", function(result) {
+    document.getElementById("blacklist").value = (typeof result.BLACKLIST === "undefined") ? defaultBlacklist : result.BLACKLIST;
 });
 
+if(timer.isWorkTime) document.getElementById("result").innerHTML = "Reset successful!";
 
 /*
  * Saveが押下されたときの処理
@@ -23,7 +24,7 @@ function onClickedSave(){
   chrome.storage.local.get("worktime", function(result) {
       // work中でない、もしくはChrome Storageにworktimeが未定義
       if(typeof result.worktime === "undefined" || !result.worktime){
-        chrome.storage.local.set({"blacklist": document.getElementById("blacklist").value}, function(){}); //  ブロックリストの更新
+        chrome.storage.local.set({"BLACKLIST": document.getElementById("blacklist").value}, function(){}); //  ブロックリストの更新
         document.getElementById("result").innerHTML = "Save successful!";
       }
       else{
@@ -40,7 +41,7 @@ function onClickedDefault(){
   chrome.storage.local.get("worktime", function(result) {
       // work中でない、もしくはChrome Storageにworktimeが未定義
       if(typeof result.worktime === "undefined" || !result.worktime){
-        chrome.storage.local.set({"blacklist": defaultBlacklist}, function(){}); // ブロックリストの初期化
+        chrome.storage.local.set({"BLACKLIST": defaultBlacklist}, function(){}); // ブロックリストの初期化
         document.getElementById("blacklist").value = defaultBlacklist; // 初期化したブロックリストを再描画
         document.getElementById("result").innerHTML = "Reset successful!";
       }
