@@ -150,6 +150,7 @@ var timer = new function Timer(){
   this.phase = 1; // タイマーの起動回数
   this.isRunning = false; // タイマーが動いているか、否か
   this.isWorkTime = true; // work中か否か
+  chrome.storage.local.set({"WORKTIME": this.isWorkTime}, function () {});
 
   /*
    * タイマーの開始処理
@@ -177,6 +178,7 @@ var timer = new function Timer(){
     this.counter = 0; // カウンターリセット
     ++this.phase; // タイマーの起動回数のカウントアップ
     this.isWorkTime = !this.isWorkTime; // work <> break反転
+    chrome.storage.local.set({"WORKTIME": this.isWorkTime}, function () {});
     clearInterval(interval);
   }
 };
