@@ -51,6 +51,7 @@ function Split(url){
  * 第１引数：チェックするタブ
  */
 function Check(tab){
+  console.log(block.url);
   let target = Split(tab.url);
   let domainCheck = false, pathCheck = false;
 

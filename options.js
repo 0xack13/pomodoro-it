@@ -1,4 +1,4 @@
-let defaultBlacklist = [
+let defaultBlackList = [
   'youtube.com',
   'instagram.com',
   'facebook.com',
@@ -12,7 +12,7 @@ let defaultBlacklist = [
  * Chrome Storageから情報を取得
  */
 chrome.storage.local.get("BLACKLIST", function(result) {
-    document.getElementById("blacklist").value = (typeof result.BLACKLIST === "undefined") ? defaultBlacklist : result.BLACKLIST;
+    document.getElementById("blacklist").value = (typeof result.BLACKLIST === "undefined") ? defaultBlackList : result.BLACKLIST;
 });
 
 /*
@@ -39,12 +39,12 @@ function onClickedDefault(){
   chrome.storage.local.get("WORKTIME", function(result) {
       // work中でない、もしくはChrome StorageにWORKTIMEが未定義
       if(typeof result.WORKTIME === "undefined" || !result.WORKTIME){
-        chrome.storage.local.set({"BLACKLIST": defaultBlacklist}, function(){}); // ブロックリストの初期化
-        document.getElementById("blacklist").value = defaultBlacklist; // 初期化したブロックリストを再描画
+        chrome.storage.local.set({"BLACKLIST": defaultBlackList}, function(){}); // ブロックリストの初期化
+        document.getElementById("blacklist").value = defaultBlackList; // 初期化したブロックリストを再描画
         document.getElementById("result").innerHTML = "Reset successful!";
       }
       else{
-        document.getElementById("result").innerHTML = "Sorry, unavailable during Work time";
+        document.getElementById("result").innerHTML = "Sorry, unavailable during work time";
       }
   });
 }

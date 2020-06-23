@@ -7,11 +7,12 @@
 </head>
 <body>
   <div class="box">
-    <div class="title">BLACK LIST</div>
-    <div class="description">ブロックしたいサイトURLを入力してください / Fill in the URLs you'd like to block</div><br>
-    <textarea id="blacklist" cols="70" rows="10" placeholder="URLs here"></textarea>
+    <h1 class="title">BLACK LIST</h1>
+    <div class="description">ブロックしたいサイトURLを入力してください / Fill in the URLs you'd like to block</div>
+    <div class="description">like "url1,url2,..."</div><br>
+    <textarea id="blacklist" cols="60" rows="10" placeholder="URLs here"></textarea><br>
 
-    <div class="title">TIMER</div>
+    <h1 class="title">TIMER</h1>
     <div class="description">タイマーを設定してください(Pro版のみ) / Set the timer configurations(for only Pro)<br><br>
       Work: <input type="text" name="work" value="25" size="1" readonly="readonly">min., Break: <input type="text" name="break" value="5" size="1" readonly="readonly">min. / Cycle<br>
       Long break: <input type="text" name="longbreak" value="15" size="1" readonly="readonly">min. every <input type="text" name="cycle" value="4" size="1" readonly="readonly">Cycles
@@ -23,5 +24,4 @@
   </div>
 </body>
 <script src="options.js"></script>
-<script src="background.js"></script>
 </html>

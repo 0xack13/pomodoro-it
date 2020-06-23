@@ -1,17 +1,31 @@
 .box{
-  margin: 3em 45em 3em;
+  width: 700px;
+  margin: 3em auto 3em;
   padding: 0em 0em 5em;
   background: #FFF4E1;
   border: solid 3px #FFF;
   border-radius: 10px;
   text-align: center;
 }
-.title{
+h1{
   margin: 1em 0em 0em;
-  font-size: 40px;
-  font-weight: bold;
-  text-decoration: underline;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1em;
   font-family: 游ゴシック体, 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro';
+}
+h1:before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  display: inline-block;
+  width: 60px;
+  height: 5px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background-color: black;
+  border-radius: 2px;
 }
 .description{
   font-size: 15px;
