@@ -22,7 +22,7 @@ function onClickedSave(){
   chrome.storage.local.get("WORKTIME", function(result) {
       // work中でない、もしくはChrome Storageにworktimeが未定義
       if(typeof result.WORKTIME === "undefined" || !result.WORKTIME){
-        chrome.storage.local.set({"BLACKLIST": document.getElementById("blacklist").value}, function(){}); //  ブロックリストの更新
+        chrome.storage.local.set({"BLACKLIST": document.getElementById("blacklist").value.split(',')}, function(){}); //  ブロックリストの更新
         document.getElementById("result").innerHTML = "Save successful!";
       }
       else{
@@ -33,9 +33,9 @@ function onClickedSave(){
 document.querySelector('#save').addEventListener('click', onClickedSave);
 
 /*
- * Defaultが押下されたときの処理
+ * Resetが押下されたときの処理
  */
-function onClickedDefault(){
+function onClickedReset(){
   chrome.storage.local.get("WORKTIME", function(result) {
       // work中でない、もしくはChrome StorageにWORKTIMEが未定義
       if(typeof result.WORKTIME === "undefined" || !result.WORKTIME){
@@ -48,4 +48,4 @@ function onClickedDefault(){
       }
   });
 }
-document.querySelector('#default').addEventListener('click', onClickedDefault)
+document.querySelector('#reset').addEventListener('click', onClickedReset)

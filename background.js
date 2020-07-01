@@ -2,7 +2,15 @@
  * ブロックの処理
  */
 let block = new function Block(){
-  this.list = [];
+  this.list = [
+    'youtube.com',
+    'instagram.com',
+    'facebook.com',
+    'twitter.com',
+    'hulu.com',
+    'netflix.com',
+    'tver.jp'
+  ];
   this.url = [];
   /*
    * ブロックリストとURLの更新

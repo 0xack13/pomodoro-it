@@ -39,6 +39,7 @@ input, textarea {
   border-radius: 0.3rem;
   background: darken(#f9f9f9, 10%);
   color: darken(#f9f9f9, 50%);
+  resize: none;
 }
 .button {
   margin: 0em 3em;
