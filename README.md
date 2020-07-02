@@ -1,4 +1,4 @@
 # Pomodoro-It
 A Google Chrome extension
 
-Description later
+Haven't completed yet. Describe later.
