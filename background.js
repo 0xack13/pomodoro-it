@@ -16,7 +16,7 @@ let block = new function Block(){
    * ブロックリストとURLの更新
    */
   this.update = function(){
-    chrome.storage.local.get("BLACKLIST", function(result) {
+    chrome.storage.sync.get("BLACKLIST", function(result) {
       block.list = result.BLACKLIST;
     });
     /*
@@ -159,7 +159,7 @@ var timer = new function Timer(){
   this.phase = 1; // タイマーの起動回数
   this.isRunning = false; // タイマーが動いているか、否か
   this.isWorkTime = true; // work中か否か
-  chrome.storage.local.set({"WORKTIME": this.isWorkTime}, function () {});
+  chrome.storage.sync.set({"WORKTIME": this.isWorkTime}, function () {});
 
   /*
    * タイマーの開始処理
@@ -187,7 +187,7 @@ var timer = new function Timer(){
     this.counter = 0; // カウンターリセット
     ++this.phase; // タイマーの起動回数のカウントアップ
     this.isWorkTime = !this.isWorkTime; // work <> break反転
-    chrome.storage.local.set({"WORKTIME": this.isWorkTime}, function () {});
+    chrome.storage.sync.set({"WORKTIME": this.isWorkTime}, function () {});
     clearInterval(interval);
   }
 };
