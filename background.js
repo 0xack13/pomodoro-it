@@ -126,31 +126,6 @@ function initCheck(){
 }
 
 /*
- * タイマー起動時の毎分の処理
- * 第１引数：タイマーの制限時間
- */
-function tick(timeout){
-  timer.counter++;
-  /*
-   * タイマー終了時の処理
-   */
-  if(timer.counter >= timeout){
-    setIcon(0); // ブラウザーアクションアイコンの設定
-    let msg = timer.isWorkTime ? "Let's have a break!" : "Let'start working!";
-    chrome.notifications.create({
-      title: "Time is up",
-      message: msg,
-      type: "basic",
-      iconUrl: "images/work0.png"
-    });
-    timer.stop();
-  }
-  else{
-    setIcon(timer.counter); // ブラウザーアクションアイコンの更新
-  }
-}
-
-/*
  * タイマーの処理
  */
 var timer = new function Timer(){
@@ -169,17 +144,8 @@ var timer = new function Timer(){
     this.isWorkTime = !this.isWorkTime; // work <> break反転
     chrome.storage.sync.set({"WORKTIME": this.isWorkTime}, function () {});
     setIcon(0); // ブラウザアクションアイコンのセット
-    interval = setInterval(tick, 100, this.getTimeout());
+    interval = setInterval(tick, 60000, this.getTimeout()); // 1分おきにtickを実行
     if(this.isWorkTime) initCheck();
-  }
-  /*
-   * タイムアウト時間[分]を返す処理
-   */
-  this.getTimeout = function(){
-    // work
-    if(this.phase % 2 != 0) return 25;
-    // break
-    else return (this.phase % 8 != 0) ? 5 : 15;
   }
   /*
    * タイマーの停止処理
@@ -188,6 +154,39 @@ var timer = new function Timer(){
     this.isRunning = false;
     this.counter = 0; // カウンターリセット
     clearInterval(interval);
+  }
+  /*
+   * タイムアウト時間[分]を返す処理
+   */
+   this.getTimeout = function(){
+    // work
+    if(this.phase % 2 != 0) return 25;
+    // break
+    else return (this.phase % 8 != 0) ? 5 : 15;
+  }
+  /*
+   * タイマー起動時の毎分の処理
+   * 第１引数：タイマーの制限時間
+   */
+  function tick(timeout){
+    timer.counter++;
+    /*
+     * タイマー終了時の処理
+     */
+    if(timer.counter >= timeout){
+      setIcon(0); // ブラウザーアクションアイコンの設定
+      let msg = timer.isWorkTime ? "Let's have a break!" : "Let'start working!";
+      chrome.notifications.create({
+        title: "Time is up",
+        message: msg,
+        type: "basic",
+        iconUrl: "images/work0.png"
+      });
+      timer.stop();
+    }
+    else{
+      setIcon(timer.counter); // ブラウザーアクションアイコンの更新
+    }
   }
 };
 
