@@ -19,6 +19,7 @@ chrome.storage.sync.get("BLACKLIST", function(result) {
  * Saveが押下されたときの処理
  */
 function onClickedSave(){
+
   chrome.storage.sync.get("WORKTIME", function(result) {
       // work中でない、もしくはChrome Storageにworktimeが未定義
       if(typeof result.WORKTIME === "undefined" || !result.WORKTIME){
