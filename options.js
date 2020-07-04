@@ -5,7 +5,6 @@ let defaultBlackList = [
   'twitter.com',
   'hulu.com',
   'netflix.com',
-  'tver.jp'
 ];
 
 /*

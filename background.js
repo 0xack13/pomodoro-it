@@ -8,8 +8,7 @@ let block = new function Block(){
     'facebook.com',
     'twitter.com',
     'hulu.com',
-    'netflix.com',
-    'tver.jp'
+    'netflix.com'
   ];
   this.url = [];
   /*
