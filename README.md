@@ -6,11 +6,11 @@ We can work more efficiently and focused cause of intervals; work for 25min., br
 *Pomodoro* comes from the Italian word for tomamo, the name "Pomodoro Technique" is derived from an episode that Cirillo did work with the intervals by using a kitchen timer shaped like tomato.
 
 ## Install
-![Published](https://github.com/MxShun/Pomodoro-It/tree/master/images/released.jpg "Published")
+![Published](https://github.com/MxShun/Pomodoro-It/blob/master/images/released.jpg "Published")
 Add to your Chrome from [here](https://chrome.google.com/webstore/detail/pomodoro-it/opbnogjaoajnpnbaaghedemddabfbpdk)(Chrome Web Store link).
 
 ## Usage
-![Options]((https://github.com/MxShun/Pomodoro-It/tree/master/images/options.jpg "Options"))
+![Options](https://github.com/MxShun/Pomodoro-It/blob/master/images/options.jpg "Options")
 1. Set the URLs you'd like to block
 2. Tap the icon to start timer
 3. Can't open blocked Web pages during Work time
