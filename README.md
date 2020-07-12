@@ -1,4 +1,5 @@
 # Pomodoro-It
+![release](https://img.shields.io/badge/release-v1.1-blue)
 A Google Chrome extension for **Pomodoro Technique**.
 
 Pomodoro Technique is a task management method suggested by *Francesco Cirillo* who is an Italian software engineer in *1987*.
