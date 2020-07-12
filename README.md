@@ -3,6 +3,7 @@ A Google Chrome extension for **Pomodoro Technique**.
 
 Pomodoro Technique is a task management method suggested by *Francesco Cirillo* who is an Italian software engineer in *1987*.
 We can work more efficiently and focused cause of intervals; work for 25min., break for 5min., work for 25min., break for 5min.,... .
+
 *Pomodoro* comes from the Italian word for tomamo, the name "Pomodoro Technique" is derived from an episode that Cirillo did work with the intervals by using a kitchen timer shaped like tomato.
 
 
