@@ -15,9 +15,7 @@ let block = new function Block(){
    * ブロックリストとURLの更新
    */
   this.update = function(){
-    chrome.storage.sync.get("BLACKLIST", function(result) {
-      block.list = result.BLACKLIST;
-    });
+    if(localStorage.getItem("blacklist")) this.list = localStorage.getItem("blacklist").split(','); // Local Storageにblacklistが定義済みであれば','で区切って配列化
     /*
      * ブロックリストをURLに返還
      */
@@ -111,6 +109,7 @@ function check(tab){
  */
 function initCheck(){
    block.update();
+   console.log(block.list);
   /*
    * タブごとにcheckを実行
    */
@@ -132,7 +131,7 @@ var timer = new function Timer(){
   this.phase = 0; // タイマーの起動回数
   this.isRunning = false; // タイマーが動いているか、否か
   this.isWorkTime = false; // work中か否か
-  chrome.storage.sync.set({"WORKTIME": this.isWorkTime}, function () {});
+  localStorage.setItem("worktime", this.isWorkTime);
 
   /*
    * タイマーの開始処理
@@ -141,9 +140,9 @@ var timer = new function Timer(){
     ++this.phase; // タイマーの起動回数のカウントアップ
     this.isRunning = true;
     this.isWorkTime = !this.isWorkTime; // work <> break反転
-    chrome.storage.sync.set({"WORKTIME": this.isWorkTime}, function () {});
+    localStorage.setItem("worktime", this.isWorkTime);
     setIcon(0); // ブラウザアクションアイコンのセット
-    interval = setInterval(tick, 60000, this.getTimeout()); // 1分おきにtickを実行
+    interval = setInterval(tick, 100, this.getTimeout()); // 1分おきにtickを実行
     if(this.isWorkTime) initCheck();
   }
   /*

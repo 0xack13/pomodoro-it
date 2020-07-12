@@ -1,5 +1,5 @@
 # Pomodoro-It
-[![release](https://img.shields.io/badge/release-v1.1-blue)](https://github.com/MxShun/Pomodoro-It/releases)
+[![release](https://img.shields.io/badge/release-v1.2-blue)](https://github.com/MxShun/Pomodoro-It/releases)
 
 A Google Chrome extension for **Pomodoro Technique**.
 
