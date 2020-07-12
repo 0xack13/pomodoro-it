@@ -1,5 +1,5 @@
 # Pomodoro-It
-![[release](https://github.com/MxShun/Pomodoro-It/releases)](https://img.shields.io/badge/release-v1.1-blue)
+[![release](https://img.shields.io/badge/release-v1.1-blue)](https://github.com/MxShun/Pomodoro-It/releases)
 
 A Google Chrome extension for **Pomodoro Technique**.
 
@@ -9,13 +9,13 @@ We can work more efficiently and focused cause of intervals; work for 25min., br
 
 
 ## Install
-![Published](https://github.com/MxShun/Pomodoro-It/blob/master/images/released.jpg "Published")
+![published](https://github.com/MxShun/Pomodoro-It/blob/master/images/released.jpg "Published")
 
 Add to your Chrome from [here](https://chrome.google.com/webstore/detail/pomodoro-it/opbnogjaoajnpnbaaghedemddabfbpdk)(Chrome Web Store link).
 
 
 ## Usage
-![Options](https://github.com/MxShun/Pomodoro-It/blob/master/images/options.jpg "Options")
+![options](https://github.com/MxShun/Pomodoro-It/blob/master/images/options.jpg "Options")
 1. Set the URLs you'd like to block
 2. Tap the icon to start timer
 3. Can't open blocked Web pages during Work time
