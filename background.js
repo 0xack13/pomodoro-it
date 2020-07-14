@@ -142,7 +142,7 @@ var timer = new function Timer(){
     this.isWorkTime = !this.isWorkTime; // work <> break反転
     localStorage.setItem("worktime", this.isWorkTime);
     setIcon(0); // ブラウザアクションアイコンのセット
-    interval = setInterval(tick, 100, this.getTimeout()); // 1分おきにtickを実行
+    interval = setInterval(tick, 60000, this.getTimeout()); // 1分おきにtickを実行
     if(this.isWorkTime) initCheck();
   }
   /*
