@@ -5,7 +5,7 @@
   "manifest_version": 2,
   "author": "MxShun",
   "default_locale": "en",
-  "permissions": ["notifications", "tabs", "storage"],
+  "permissions": ["notifications", "tabs"],
   "background": {
     "scripts": ["background.js"],
     "persistent": false
