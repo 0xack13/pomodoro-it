@@ -1,5 +1,6 @@
-# Pomodoro-It
+# Pomodoro it
 [![release](https://img.shields.io/badge/release-v1.3-blue)](https://github.com/MxShun/Pomodoro-It/releases)
+[![license](https://img.shields.io/github/license/MxShun/pomodoro-it)](https://github.com/MxShun/pomodoro-it/blob/master/LICENSE)
 
 A Google Chrome extension for **Pomodoro Technique**.
 
@@ -35,3 +36,7 @@ In this app `persistent` of background.js is denied, means it's not resident.
   "persistent": false
 }
 ```
+
+
+## License
+[MIT License](https://github.com/MxShun/tank-battle/blob/master/LICENSE)
