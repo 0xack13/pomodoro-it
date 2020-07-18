@@ -1,5 +1,5 @@
 # Pomodoro it
-[![release](https://img.shields.io/badge/release-v1.3-blue)](https://github.com/MxShun/Pomodoro-It/releases)
+[![release](https://img.shields.io/badge/release-v1.3-blue)](https://github.com/MxShun/pomodoro-it/releases)
 [![license](https://img.shields.io/github/license/MxShun/pomodoro-it)](https://github.com/MxShun/pomodoro-it/blob/master/LICENSE)
 
 A Google Chrome extension for **Pomodoro Technique**.
@@ -10,13 +10,13 @@ We can work more efficiently and focused cause of intervals; work for 25min., br
 
 
 ## Install
-![published](https://github.com/MxShun/Pomodoro-It/blob/master/images/released.jpg "Published")
+![published](https://github.com/MxShun/pomodoro-it/blob/master/images/released.jpg "Published")
 
 Add to your Chrome from [here](https://chrome.google.com/webstore/detail/pomodoro-it/opbnogjaoajnpnbaaghedemddabfbpdk)(Chrome Web Store link).
 
 
 ## Usage
-![options](https://github.com/MxShun/Pomodoro-It/blob/master/images/options.jpg "Options")
+![options](https://github.com/MxShun/pomodoro-it/blob/master/images/options.jpg "Options")
 1. Set the URLs you'd like to block
 2. Tap the icon to start timer
 3. Can't open blocked Web pages during Work time
@@ -39,4 +39,4 @@ In this app `persistent` of background.js is denied, means it's not resident.
 
 
 ## License
-[MIT License](https://github.com/MxShun/tank-battle/blob/master/LICENSE)
+[MIT License](https://github.com/MxShun/pomodoro-it/blob/master/LICENSE)
