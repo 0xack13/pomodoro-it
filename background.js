@@ -14,16 +14,14 @@ let block = new function Block(){
   /*
    * ブロックリストとURLの更新
    */
-  this.update = function(){
+  this.update = () => {
     if(localStorage.getItem("blacklist")) this.list = localStorage.getItem("blacklist").split(','); // Local Storageにblacklistが定義済みであれば','で区切って配列化
-    /*
-     * ブロックリストをURLに返還
-     */
     for(let k in this.list){
-      this.url[k] = divide(this.list[k]);
+      this.url[k] = divideUrl(this.list[k]);
     }
   }
 }
+
 /*
  * ブラウザーアクションアイコンのセット処理
  * 第１引数：アイコンインデックス
@@ -40,7 +38,7 @@ function setIcon(index){
  * URLをドメインとパスに分割
  * 第１引数：分割するURL
  */
-function divide(url){
+function divideUrl(url){
   if(url.match('://')){
     url = url.split('://'); // スキーム除去
     url = url[1].split('/'); // 階層分割
@@ -55,8 +53,8 @@ function divide(url){
  * プロックチェック
  * 第１引数：チェックするタブ
  */
-function check(tab){
-  let target = divide(tab.url);
+function checkTab(tab){
+  let target = divideUrl(tab.url);
   let domainCheck = false, pathCheck = false;
 
   for(let k in block.url){
@@ -108,16 +106,12 @@ function check(tab){
  * タイマー開始時のブロックチェック前準備
  */
 function initCheck(){
-   block.update();
-   console.log(block.list);
-  /*
-   * タブごとにcheckを実行
-   */
+  block.update();
   let windows = chrome.windows.getAll({populate: true}, function (windows) {
     for(let i in windows) {
       let tabs = windows[i].tabs;
       for(let j in tabs) {
-        check(tabs[j]);
+        checkTab(tabs[j]);
       }
     }
   });
@@ -136,42 +130,42 @@ var timer = new function Timer(){
   /*
    * タイマーの開始処理
    */
-  this.start = function(){
+  this.start = () => {
     ++this.phase; // タイマーの起動回数のカウントアップ
     this.isRunning = true;
     this.isWorkTime = !this.isWorkTime; // work <> break反転
     localStorage.setItem("worktime", this.isWorkTime);
     setIcon(0); // ブラウザアクションアイコンのセット
-    interval = setInterval(tick, 60000, this.getTimeout()); // 1分おきにtickを実行
+    chrome.alarms.create("timeSignal", {periodInMinutes: 1}); // 1分おきにtimeSignalを発火
     if(this.isWorkTime) initCheck();
   }
   /*
    * タイマーの停止処理
    */
-  this.stop = function(){
+  this.stop = () => {
     this.isRunning = false;
     this.counter = 0; // カウンターリセット
-    clearInterval(interval);
+    chrome.alarms.clear("timeSignal");
   }
   /*
    * タイムアウト時間[分]を返す処理
    */
-   this.getTimeout = function(){
+   this.getTimeout = () => {
     // work
     if(this.phase % 2 != 0) return 25;
     // break
     else return (this.phase % 8 != 0) ? 5 : 15;
   }
-  /*
-   * タイマー起動時の毎分の処理
-   * 第１引数：タイマーの制限時間
-   */
-  function tick(timeout){
+};
+
+/*
+ * タイマー起動時の毎分の処理
+ */
+chrome.alarms.onAlarm.addListener(function(alarm) {
+  if(alarm.name == "timeSignal"){
     timer.counter++;
-    /*
-     * タイマー終了時の処理
-     */
-    if(timer.counter >= timeout){
+
+    if(timer.counter >= timer.getTimeout()){
       setIcon(0); // ブラウザーアクションアイコンの設定
       let msg = timer.isWorkTime ? "Let's have a break!" : "Let'start working!";
       chrome.notifications.create({
@@ -186,7 +180,7 @@ var timer = new function Timer(){
       setIcon(timer.counter); // ブラウザーアクションアイコンの更新
     }
   }
-};
+});
 
 /*
  * 通知がクリックされたときの処理
@@ -203,7 +197,7 @@ chrome.notifications.onClicked.addListener(function (id) {
  */
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if(timer.isRunning && timer.isWorkTime) {
-    check(tab);
+    checkTab(tab);
   }
 });
 

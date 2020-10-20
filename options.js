@@ -8,7 +8,7 @@ let defaultBlackList = [
 ];
 
 /*
- * Chrome Storageから情報を取得
+ * Local Storageから情報を取得
  */
 document.getElementById("blacklist").value = (!localStorage.getItem("blacklist")) ? defaultBlackList : localStorage.getItem("blacklist");
 
